@@ -1,43 +1,45 @@
-# Youtube Downloader
+# electron-quick-start
 
-This is a repository that has sample code for my [Medium Article](https://blog.usejournal.com/how-i-made-my-own-youtube-downloader-using-javascript-and-node-js-160b172f6e10)
+**Clone and run for a quick way to see Electron in action.**
 
-## Getting Started
+This is a minimal Electron application based on the [Quick Start Guide](https://electronjs.org/docs/tutorial/quick-start) within the Electron documentation.
 
-If there is any issues please open a new issue.
+**Use this app along with the [Electron API Demos](https://electronjs.org/#get-started) app for API code examples to help you get started.**
 
-1. You need to clone this repository
-```
-	git clone https://github.com/mooradal/youtubeDownloader
-```
+A basic Electron application needs just these files:
 
-2. After you clone the repo you will have to navigate to the Server folder
-```
-    cd Server
-```
+- `package.json` - Points to the app's main file and lists its details and dependencies.
+- `main.js` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
+- `index.html` - A web page to render. This is the app's **renderer process**.
 
-3. Then you will have to install all the packages and dependencies
-```
-    npm install 
-```
+You can learn more about each of these components within the [Quick Start Guide](https://electronjs.org/docs/tutorial/quick-start).
 
-4. Finally you need to run it
-```
-	node index.js
-```
+## To Use
 
-5. If you want to use nodemon (nodemon is a package that will auto restart the server when files are changed) you can run **(Optional)**
+To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
 
-```
-	npm run dev
-```
-or
-```
-	nodemon index.js
+```bash
+# Clone this repository
+git clone https://github.com/electron/electron-quick-start
+# Go into the repository
+cd electron-quick-start
+# Install dependencies
+npm install
+# Run the app
+npm start
 ```
 
-## Info
+Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
 
-If there is any issues please open a new issue. You are welcome to add pull requests at anytime
+## Resources for Learning Electron
 
-Thank you so much for supporting me and thank you for almost 2,000 claps. I really appreciate that. I will try to post more articles and I'm thinking of turning this project from a sample code to an actual functional public website for everyone to use!
+- [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
+- [electronjs.org/community#boilerplates](https://electronjs.org/community#boilerplates) - sample starter apps created by the community
+- [electron/electron-quick-start](https://github.com/electron/electron-quick-start) - a very basic starter Electron app
+- [electron/simple-samples](https://github.com/electron/simple-samples) - small applications with ideas for taking them further
+- [electron/electron-api-demos](https://github.com/electron/electron-api-demos) - an Electron app that teaches you how to use Electron
+- [hokein/electron-sample-apps](https://github.com/hokein/electron-sample-apps) - small demo apps for the various Electron APIs
+
+## License
+
+[CC0 1.0 (Public Domain)](LICENSE.md)
