@@ -9,38 +9,69 @@ const fs = require('fs');
 const readline = require('readline');
 
 var mp3Btn = document.getElementById("mp3");
-var mp4Btn = document.getElementById("mp4");
+var bar = document.getElementById("myBar");
+var close = document.getElementsByClassName("closebtn");
 var URLinput = document.querySelector(".URL-input");
 
+bar.style.display = "none";
+
+var nomeFile = "audio.mp3";
+var lista = [];
 
 mp3Btn.addEventListener("click", () => {
 	const url = URLinput.value;
 	console.log(`URL: ${url}`);
-	const video = ytdl(url, {
-		quality: "highestaudio",
-		format: "mp3",
-		filter: "audioonly"
+	ytdl.getInfo(url, (err, info) => {
+		console.log("info ", info);
+		nomeFile = info.title + ".mp3";
+		const video = ytdl(url, {
+			quality: "highestaudio",
+			format: "mp3",
+			filter: "audioonly"
+		});
+
+		video.pipe(fs.createWriteStream(nomeFile));
+		video.once('response', () => {
+			bar.style.display = "block";
+			starttime = Date.now();
+		});
+
+		video.on('progress', (chunkLength, downloaded, total) => {
+			const percent = downloaded / total;
+			const downloadedMinutes = (Date.now() - starttime) / 1000 / 60;
+			readline.cursorTo(process.stdout, 0);
+			let percentString = (percent * 100).toFixed(2);
+			process.stdout.write(`${percentString}% downloaded `);
+			let downloadedSize = (downloaded / 1024 / 1024).toFixed(2);
+			let totalSize = (total / 1024 / 1024).toFixed(2);
+			process.stdout.write(`(${downloadedSize}MB of ${totalSize}MB)\n`);
+			let downloadedMinutesText = downloadedMinutes.toFixed(2)
+			process.stdout.write(`running for: ${downloadedMinutesText}minutes`);
+			let estimatedMinutesText = (downloadedMinutes / percent - downloadedMinutes).toFixed(2);
+			process.stdout.write(`, estimated time left: ${estimatedMinutesText}minutes `);
+			readline.moveCursor(process.stdout, 0, -1);
+			bar.style.width = (percent * 100) + "%";
+			bar.innerHTML = percentString + "%" + " tempo stimato : " + estimatedMinutesText + " minuti";
+		});
+		video.on('end', () => {
+			bar.style.display = "none";
+			close[0].parentElement.style.display = "block";
+			process.stdout.write('\n\n');
+		});
+		video.on('error', (e) => {
+			console.error("Errore: ", e);
+			close[1].parentElement.style.display = "block";
+		});
 	});
-	video.pipe(fs.createWriteStream('audio.mp3'));
-	video.once('response', () => {
-		starttime = Date.now();
-	});
-	video.on('progress', (chunkLength, downloaded, total) => {
-		const percent = downloaded / total;
-		const downloadedMinutes = (Date.now() - starttime) / 1000 / 60;
-		readline.cursorTo(process.stdout, 0);
-		process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded `);
-		process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`);
-		process.stdout.write(`running for: ${downloadedMinutes.toFixed(2)}minutes`);
-		process.stdout.write(`, estimated time left: ${(downloadedMinutes / percent - downloadedMinutes).toFixed(2)}minutes `);
-		readline.moveCursor(process.stdout, 0, -1);
-	});
-	video.on('end', () => {
-		process.stdout.write('\n\n');
-	});
-	video.on('error', (e) => { console.error("Errore: ", e); });
+
+
 });
 
-mp4Btn.addEventListener("click", () => {
-	console.log(`URL: ${URLinput.value}`);
-});
+for (let i = 0; i < close.length; i++) {
+	close[i].parentElement.style.display = "none";
+	close[i].onclick = function () {
+		var div = this.parentElement;
+		div.style.opacity = "0";
+		setTimeout(function () { div.style.display = "none"; }, 600);
+	}
+}

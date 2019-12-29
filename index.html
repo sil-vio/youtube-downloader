@@ -1,23 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-		<link rel="stylesheet" type="text/css" href="style.css">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1 class="heading">My Own Youtube Downloader !</h1>
-    <input
+
+<head>
+	<meta charset="UTF-8">
+	<!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+	<meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+	<title>Hello World!</title>
+</head>
+
+<body>
+	<h1 class="heading">My Own Youtube Downloader !</h1>
+	<div class="alert success">
+  	<span class="closebtn">&times;</span>  
+  	<strong>Scaricato!</strong> File scaricato con successo.
+	</div>
+	<div class="alert">
+  	<span class="closebtn">&times;</span>  
+  	<strong>Errore!</strong> Non é stato possibile scaricare il file.
+	</div>
+	<input
       class="URL-input"
       placeholder="https://www.youtube.com/watch?v=MtN1YnoL46Q"
     />
     <button class="convert-button" id="mp4">Convert mp4</button>
-    <button class="convert-button" id="mp3">Convert mp3</button>
+    <button class="convert-button" id="mp3">Get mp3</button>
 
-    <!-- You can also require other files to run in this process -->
+		<div id="myProgress">
+			<div id="myBar"></div>
+		</div>    
+		<!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
   </body>
 </html>
