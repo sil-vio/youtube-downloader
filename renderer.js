@@ -7,23 +7,27 @@
 const ytdl = require("ytdl-core");
 const fs = require('fs');
 const readline = require('readline');
+var stringSanitizer = require("string-sanitizer");
 
 var mp3Btn = document.getElementById("mp3");
 var bar = document.getElementById("myBar");
 var close = document.getElementsByClassName("closebtn");
 var URLinput = document.querySelector(".URL-input");
+const {shell} = require('electron');
+const app = require('electron').remote.app;
+const currentDir = app.getAppPath();
+
 
 bar.style.display = "none";
 
 var nomeFile = "audio.mp3";
-var lista = [];
 
 mp3Btn.addEventListener("click", () => {
 	const url = URLinput.value;
 	console.log(`URL: ${url}`);
 	ytdl.getInfo(url, (err, info) => {
 		console.log("info ", info);
-		nomeFile = info.title + ".mp3";
+		nomeFile = stringSanitizer.sanitize(info.title) + ".mp3";
 		const video = ytdl(url, {
 			quality: "highestaudio",
 			format: "mp3",
@@ -73,5 +77,6 @@ for (let i = 0; i < close.length; i++) {
 		var div = this.parentElement;
 		div.style.opacity = "0";
 		setTimeout(function () { div.style.display = "none"; }, 600);
+		shell.showItemInFolder(currentDir);
 	}
 }

@@ -1,0 +1,9 @@
+appId: "it.giannini.silvio.youtube-downloader"
+
+# Package app code into a asar archive. Set to false to debug issues.
+asar: true
+
+# Mac OS configuration
+win:
+  target:
+    - "portable"
